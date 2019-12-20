@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <Continents />
+    <Todos />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Continents from "./components/Continents.vue";
+import Todos from "./components/Todos.vue";
 
 export default Vue.extend({
   name: "app",
   components: {
-    Continents
+    Todos
   }
 });
 </script>

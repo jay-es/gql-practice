@@ -1,24 +1,31 @@
-# gql-ts
+# GraphQL Todo List
+
+## Project Overview
+### Client
+- Vue CLI 3
+- vue-cli-plugin-apollo
+
+### Server
+- express
+- apollo-server-express
+
 
 ## Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 1. Start back-end server
+```
+npm run server
+```
+
+### 2. Start front-end server
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 3. Open browser
 ```
-npm run build
+http://localhost:8080/
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
