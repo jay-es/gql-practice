@@ -1,11 +1,12 @@
-const fs = require("fs");
-const path = require("path");
-const { ApolloServer, gql } = require("apollo-server-express");
+import fs from "fs";
+import path from "path";
+import { ApolloServer, gql } from "apollo-server-express";
+import { Todo } from "@/types";
 
 const schemaPath = path.resolve(__dirname, "../schema.graphql");
 const typeDefs = gql(fs.readFileSync(schemaPath, "utf-8"));
 
-const todos = [
+const todos: Todo[] = [
   {
     id: 1,
     text: "wake up",
@@ -18,15 +19,15 @@ const todos = [
   }
 ];
 
-const getTodo = id => todos.find(v => v.id === id);
+const getTodo = (id: number) => todos.find(v => v.id === id);
 
 const resolvers = {
   Query: {
     todos: () => todos,
-    todo: (_, { id }) => getTodo(id)
+    todo: (_: Todo, { id }: Todo) => getTodo(id)
   },
   Mutation: {
-    createTodo: (_, { text }) => {
+    createTodo: (_: Todo, { text }: Todo) => {
       const newTodo = {
         text,
         done: false,
@@ -37,7 +38,7 @@ const resolvers = {
 
       return newTodo;
     },
-    toggleTodo: (_, { id }) => {
+    toggleTodo: (_: Todo, { id }: Todo) => {
       const todo = getTodo(id);
 
       if (!todo) return;
@@ -48,4 +49,4 @@ const resolvers = {
   }
 };
 
-module.exports = new ApolloServer({ typeDefs, resolvers });
+export default new ApolloServer({ typeDefs, resolvers });

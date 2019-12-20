@@ -17,12 +17,7 @@
 <script lang="ts">
 import Vue from "vue";
 import gql from "graphql-tag";
-
-interface Todo {
-  id: number;
-  text: string;
-  done: boolean;
-}
+import { Todo } from "@/types";
 
 const createTodo = gql`
   mutation createTodo($text: String!) {

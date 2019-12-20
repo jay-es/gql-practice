@@ -1,5 +1,5 @@
-const express = require("express");
-const apolloServer = require("./todos");
+import express from "express";
+import apolloServer from "./todos";
 
 const app = express();
 apolloServer.applyMiddleware({ app });
