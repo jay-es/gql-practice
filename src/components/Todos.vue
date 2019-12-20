@@ -55,15 +55,17 @@ export default Vue.extend({
   }),
   methods: {
     async create() {
-      const res = await this.$apollo.mutate({
+      const res = await this.$apollo.mutate<{ createTodo: Todo }>({
         mutation: createTodo,
         variables: {
           text: this.inputText
         }
       });
 
-      this.todos.push(res.data.createTodo);
-      this.inputText = "";
+      if (res.data) {
+        this.todos.push(res.data.createTodo);
+        this.inputText = "";
+      }
     },
     toggle(id: number) {
       this.$apollo.mutate({
