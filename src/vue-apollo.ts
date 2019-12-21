@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueApollo from "vue-apollo";
-import {
+const {
   createApolloClient,
   restartWebsockets
-} from "vue-cli-plugin-apollo/graphql-client";
+} = require("vue-cli-plugin-apollo/graphql-client");
 
 // Install the vue plugin
 Vue.use(VueApollo);
@@ -81,7 +81,7 @@ export function createProvider(options = {}) {
 }
 
 // Manually call this when user log in
-export async function onLogin(apolloClient, token) {
+export async function onLogin(apolloClient: any, token: string) {
   if (typeof localStorage !== "undefined" && token) {
     localStorage.setItem(AUTH_TOKEN, token);
   }
@@ -95,7 +95,7 @@ export async function onLogin(apolloClient, token) {
 }
 
 // Manually call this when user log out
-export async function onLogout(apolloClient) {
+export async function onLogout(apolloClient: any) {
   if (typeof localStorage !== "undefined") {
     localStorage.removeItem(AUTH_TOKEN);
   }

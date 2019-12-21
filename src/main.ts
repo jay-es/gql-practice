@@ -1,6 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
-const { createProvider } = require("./vue-apollo");
+import { createProvider } from "./vue-apollo";
 
 Vue.config.productionTip = false;
 

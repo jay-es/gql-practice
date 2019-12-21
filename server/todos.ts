@@ -28,7 +28,7 @@ const resolvers = {
   },
   Mutation: {
     createTodo: (_: Todo, { text }: Todo) => {
-      const newTodo = {
+      const newTodo: Todo = {
         text,
         done: false,
         id: todos.length + 1
