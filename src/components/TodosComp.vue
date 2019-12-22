@@ -26,21 +26,33 @@ import { useMutation, useQuery, useResult } from "@vue/apollo-composable";
 import { ALL_TODOS, CREATE_TODO, TOGGLE_TODO } from "./graphql";
 import { Todo } from "@/types";
 
+const useTodos = () => {
+  const { result } = useQuery<{ todos: Todo[] }>(ALL_TODOS);
+  const todos = useResult(result, [] as Todo[], ({ todos }) => todos);
+
+  return {
+    todos,
+    addTodo: (newTodo: Todo) => {
+      result.value.todos.push(newTodo);
+    },
+    toggleById: (id: number) => {
+      const todo = todos.value.find(v => v.id === id);
+      if (!todo) return;
+      todo.done = !todo.done;
+    }
+  };
+};
+
 export default createComponent({
   name: "Todos",
   setup() {
-    // todos
-    const { result } = useQuery<{ todos: Todo[] }>(ALL_TODOS);
-    const todos = useResult(result, [] as Todo[], v => v.todos);
+    const { todos, addTodo, toggleById } = useTodos();
 
     // toggle
     const { mutate: toggle } = useMutation<{ toggleTodo: Todo }>(TOGGLE_TODO, {
       update: (_, { data }) => {
         if (!data) return;
-
-        const { id } = data.toggleTodo;
-        const todo = todos.value.find(v => v.id === id)!;
-        todo.done = !todo.done;
+        toggleById(data.toggleTodo.id);
       }
     });
 
@@ -51,10 +63,9 @@ export default createComponent({
       () => ({
         variables: { text: inputText.value },
         update: (_, { data }) => {
-          inputText.value = "";
-
           if (!data) return;
-          result.value.todos.push(data.createTodo);
+          inputText.value = "";
+          addTodo(data.createTodo);
         }
       })
     );
