@@ -1,17 +1,20 @@
 <template>
   <div id="app">
     <Todos />
+    <TodosComp />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Todos from "./components/Todos.vue";
+import TodosComp from "./components/TodosComp.vue";
 
 export default Vue.extend({
   name: "app",
   components: {
-    Todos
+    Todos,
+    TodosComp
   }
 });
 </script>

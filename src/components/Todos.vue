@@ -16,36 +16,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import gql from "graphql-tag";
+import { ALL_TODOS, CREATE_TODO, TOGGLE_TODO } from "./graphql";
 import { Todo } from "@/types";
-
-const createTodo = gql`
-  mutation createTodo($text: String!) {
-    createTodo(text: $text) {
-      id
-      text
-      done
-    }
-  }
-`;
-const toggleTodo = gql`
-  mutation toggleTodo($id: Int!) {
-    toggleTodo(id: $id) {
-      id
-      # text
-      done
-    }
-  }
-`;
-const allTodos = gql`
-  query todos {
-    todos {
-      id
-      text
-      done
-    }
-  }
-`;
 
 export default Vue.extend({
   name: "Todos",
@@ -56,7 +28,7 @@ export default Vue.extend({
   methods: {
     async create() {
       const res = await this.$apollo.mutate<{ createTodo: Todo }>({
-        mutation: createTodo,
+        mutation: CREATE_TODO,
         variables: {
           text: this.inputText
         }
@@ -69,7 +41,7 @@ export default Vue.extend({
     },
     toggle(id: number) {
       this.$apollo.mutate({
-        mutation: toggleTodo,
+        mutation: TOGGLE_TODO,
         variables: {
           id
         }
@@ -77,15 +49,17 @@ export default Vue.extend({
     }
   },
   apollo: {
-    todos: allTodos
+    todos: ALL_TODOS
   }
 });
 </script>
 
 <style scoped>
 .todos {
+  display: inline-block;
   width: 220px;
   margin: 0 auto;
+  padding: 0 10px;
   text-align: left;
 }
 ul {
